@@ -23,16 +23,25 @@ public:
 
         friend std::ostream &operator<<(std::ostream &os, const Choice &choice);
 
-    private:
         static const std::string CHARS;
         static std::unordered_map<char, std::string> NAMES;
     };
 
     virtual void choice();
 
-private:
+protected:
     std::string m_name;
     Choice m_choice;
+};
+
+class Bot : public Player {
+public:
+    Bot();
+
+    void choice() override;
+
+private:
+    static int counter;
 };
 
 #endif // PLAYER_H

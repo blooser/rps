@@ -12,4 +12,5 @@ public:
 
 private:
     Player m_player;
+    Bot bot;
 };

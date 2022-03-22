@@ -1,5 +1,7 @@
 #include "player.h"
 
+#include <random>
+
 Player::Player(const std::string &name)
     : m_name(name) {
 
@@ -58,6 +60,38 @@ void Player::choice() {
         exit(-1);
     }
 
-    std::cout << m_name << " choosed: " << m_choice;
+    std::cout << m_name << " choosed: " << m_choice << "\n";
+}
+
+int Bot::counter = 0;
+
+Bot::Bot() : Player("Bot" + std::to_string(++counter)) {
+
+}
+
+class RandomChar{
+public:
+    RandomChar(const std::string chars)
+        : m_chars(chars),
+          distrib(0, chars.size()-1) {}
+
+    char operator()() {
+        return m_chars[distrib(device)];
+    };
+
+private:
+    std::string m_chars;
+    std::random_device device;
+    std::uniform_int_distribution<> distrib;
+};
+
+RandomChar randomChar {Player::Choice::CHARS};
+
+
+
+void Bot::choice() {
+    m_choice = randomChar();
+
+    std::cout << m_name << " choosed: " << m_choice << "\n";
 }
 
