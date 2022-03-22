@@ -16,38 +16,40 @@ void Game::exec() {
 
         std::cout << m_player << " vs " << bot << "\n";
 
-        m_player.choice();
-        bot.choice();
+        auto playerChoice = m_player.choice();
+        auto botChoice = bot.choice();
 
-        resolve(m_player, bot);
+        resolve(playerChoice, botChoice);
+
+        std::cout << "Player score: " << m_player.m_score << "\n";
     }
 }
 
-void Game::resolve(Player player, Bot bot) {
-    if (player.m_choice > bot.m_choice) {
-        win(player);
+void Game::resolve(Player::Choice& playerChoice, Bot::Choice& botChoice) {
+    if (playerChoice > botChoice) {
+        win(playerChoice.player);
         return;
     }
 
-    if (player.m_choice < bot.m_choice) {
-        win(bot);
+    if (playerChoice < botChoice) {
+        win(botChoice.player);
         return;
     }
 
-    if (player.m_choice == bot.m_choice) {
-        win(player, bot);
+    if (playerChoice == botChoice) {
+        win(playerChoice.player, botChoice.player);
     }
 }
 
 template <typename Winner>
-void Game::win(Winner winner) {
-    std::cout << winner << " won with " << winner.m_choice << " choice\n";
+void Game::win(Winner& winner) {
+    std::cout << winner << " won \n";
 
     winner.m_score += 2;
 }
 
 template <typename Winner, typename AnotherWinner>
-void Game::win(Winner winner1, AnotherWinner winner2) {
+void Game::win(Winner& winner1, AnotherWinner& winner2) {
     std::cout << "Tie for " << winner1 << " and " << winner2 << "\n";
 
     winner1.m_score += 1;

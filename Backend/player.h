@@ -15,7 +15,10 @@ public:
     Player(const std::string &name);
 
     struct Choice {
+        Choice(Player&);
+
         char m_value;
+        Player& player;
 
         Choice &operator=(char);
         bool invalid() const;
@@ -30,7 +33,7 @@ public:
         static std::unordered_map<char, std::string> NAMES;
     };
 
-    virtual void choice();
+    virtual Choice choice();
 
     friend std::ostream& operator<<(std::ostream &os, const Player& player);
 
@@ -39,14 +42,13 @@ public:
 protected:
     std::string m_name;
     unsigned int m_score;
-    Choice m_choice;
 };
 
 class Bot : public Player {
 public:
     Bot();
 
-    void choice() override;
+    Choice choice() override;
 
     friend class Game;
 

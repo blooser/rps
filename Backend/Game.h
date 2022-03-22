@@ -12,13 +12,13 @@ public:
     void exec();
 
 protected:
-    void resolve(Player player, Bot bot);
+    void resolve(Player::Choice&, Player::Choice&);
 
     template <typename Winner>
-    void win(Winner winner);
+    void win(Winner& winner);
 
     template <typename Winner, typename AnotherWinner>
-    void win(Winner winner1, AnotherWinner winner2);
+    void win(Winner& winner1, AnotherWinner& winner2);
 
 private:
     Player m_player;

@@ -40,6 +40,10 @@ std::ostream &operator<<(std::ostream &os, const Player::Choice &choice) {
 };
 
 
+Player::Choice::Choice(Player& _player)
+    : player(_player),
+      m_value('\0') {}
+
 Player::Choice &Player::Choice::operator=(char choice) {
     m_value = choice;
 
@@ -72,20 +76,23 @@ std::ostream& operator<<(std::ostream &os, const Player &player) {
     return os << player.m_name;
 };
 
-void Player::choice() {
+Player::Choice Player::choice() {
     std::cout << m_name << " choice: ";
 
     char playerChoice;
     std::cin >> playerChoice;
 
-    m_choice = playerChoice;
+    Choice choice(*this);
+    choice = playerChoice;
 
-    if (m_choice.invalid()) {
+    if (choice.invalid()) {
         std::cerr << "Invalid choice\n";
         exit(-1);
     }
 
-    std::cout << m_name << " choosed: " << m_choice << "\n";
+    std::cout << m_name << " choosed: " << choice << "\n";
+
+    return choice;
 }
 
 int Bot::counter = START;
@@ -94,10 +101,13 @@ Bot::Bot() : Player("Bot" + std::to_string(++counter)) {
 
 }
 
-void Bot::choice() {
-    m_choice = randomChar();
+Player::Choice Bot::choice() {
+    Choice choice(*this);
+    choice = randomChar();
 
-    std::cout << m_name << " choosed: " << m_choice << "\n";
+    std::cout << m_name << " choosed: " << choice << "\n";
+
+    return choice;
 }
 
 Bots::Bots(const int n) : m_bots_n(n) {
