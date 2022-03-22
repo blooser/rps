@@ -29,8 +29,13 @@ public:
 
     virtual void choice();
 
+    friend std::ostream& operator<<(std::ostream &os, const Player& player);
+
+    friend class Game;
+
 protected:
     std::string m_name;
+    unsigned int m_score;
     Choice m_choice;
 };
 
@@ -39,6 +44,8 @@ public:
     Bot();
 
     void choice() override;
+
+    friend class Game;
 
 private:
     static int counter;

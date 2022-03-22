@@ -3,7 +3,8 @@
 #include <random>
 
 Player::Player(const std::string &name)
-    : m_name(name) {
+    : m_name(name),
+      m_score(0) {
 
     std::cout << m_name << " " << "entered to the game. \n";
 }
@@ -46,6 +47,10 @@ bool Player::Choice::operator<(const Choice &other) {
 bool Player::Choice::operator==(const Choice &other) {
     return m_value == other.m_value;
 }
+
+std::ostream& operator<<(std::ostream &os, const Player &player) {
+    return os << player.m_name;
+};
 
 void Player::choice() {
     std::cout << m_name << " choice: ";
