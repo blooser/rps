@@ -2,9 +2,28 @@
 
 #include <random>
 
+class RandomChar{
+public:
+    RandomChar(const std::string chars)
+        : m_chars(chars),
+          distrib(START, chars.size()-1) {}
+
+    char operator()() {
+        return m_chars[distrib(device)];
+    };
+
+private:
+    std::string m_chars;
+    std::random_device device;
+    std::uniform_int_distribution<> distrib;
+};
+
+RandomChar randomChar {Player::Choice::CHARS};
+
+
 Player::Player(const std::string &name)
     : m_name(name),
-      m_score(0) {
+      m_score(ZERO) {
 
     std::cout << m_name << " " << "entered to the game. \n";
 }
@@ -68,31 +87,11 @@ void Player::choice() {
     std::cout << m_name << " choosed: " << m_choice << "\n";
 }
 
-int Bot::counter = 0;
+int Bot::counter = START;
 
 Bot::Bot() : Player("Bot" + std::to_string(++counter)) {
 
 }
-
-class RandomChar{
-public:
-    RandomChar(const std::string chars)
-        : m_chars(chars),
-          distrib(0, chars.size()-1) {}
-
-    char operator()() {
-        return m_chars[distrib(device)];
-    };
-
-private:
-    std::string m_chars;
-    std::random_device device;
-    std::uniform_int_distribution<> distrib;
-};
-
-RandomChar randomChar {Player::Choice::CHARS};
-
-
 
 void Bot::choice() {
     m_choice = randomChar();

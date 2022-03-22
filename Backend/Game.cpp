@@ -36,9 +36,14 @@ void Game::resolve(Player player, Bot bot) {
 template <typename Winner>
 void Game::win(Winner winner) {
     std::cout << winner << " won with " << winner.m_choice << " choice\n";
+
+    winner.m_score += 2;
 }
 
 template <typename Winner, typename AnotherWinner>
 void Game::win(Winner winner1, AnotherWinner winner2) {
     std::cout << "Tie for " << winner1 << " and " << winner2 << "\n";
+
+    winner1.m_score += 1;
+    winner2.m_score += 1;
 }

@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <unordered_map>
 
+#define START 0
+#define ZERO 0
 
 class Player {
 public:

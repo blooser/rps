@@ -4,6 +4,7 @@
 
 #define LOOP for(;;)
 
+
 class Game final {
 public:
     Game();
