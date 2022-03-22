@@ -9,3 +9,6 @@ target_sources(Backend
                 player.h
                 player.cpp
 )
+
+find_package(Threads REQUIRED)
+target_link_libraries(Backend PRIVATE Threads::Threads)

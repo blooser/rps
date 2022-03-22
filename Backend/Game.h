@@ -4,8 +4,8 @@
 
 #define LOOP for(;;)
 
-#define BEGIN std::cout << "-----------------------\n";
-#define END std::cout << "-----------------------\n\n";
+#define BEGIN_ROUND std::cout << "-----------------------\n";
+#define END_ROUND std::cout << "-----------------------\n\n";
 
 
 class Game final {

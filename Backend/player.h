@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
+#include <future>
 
 #define START 0
 #define ZERO 0
@@ -68,5 +69,14 @@ private:
     std::vector<Bot> m_bots;
     std::vector<Bot>::iterator m_current_bot_it;
 };
+
+
+struct DelayedBotChoice {
+    void operator()();
+
+    Bot &bot;
+    std::promise<Player::Choice> promise;
+};
+
 
 #endif // PLAYER_H

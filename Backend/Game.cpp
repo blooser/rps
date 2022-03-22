@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include <chrono>
+#include <future>
 #include <thread>
 #include <cassert>
 
@@ -15,19 +16,26 @@ void Game::exec() {
     LOOP {
         Bot& bot = m_bots.next();
 
-        BEGIN
+        BEGIN_ROUND
 
         std::cout << m_player << " vs " << bot << "\n";
 
         auto playerChoice = m_player.choice();
-        auto botChoice = bot.choice();
+
+        DelayedBotChoice delayedBotChoice = DelayedBotChoice{bot};
+        auto future = delayedBotChoice.promise.get_future();
+
+        std::thread t(std::ref(delayedBotChoice));
+        t.detach(); // NOTE: Bye!
+
+        auto botChoice = future.get();
 
         resolve(playerChoice, botChoice);
 
         std::cout << m_player << " score: " << m_player.m_score << " : "
                   << bot << " score: " << bot.m_score << "\n";
 
-        END
+        END_ROUND
     }
 }
 
@@ -51,7 +59,7 @@ void Game::resolve(Player::Choice& playerChoice, Bot::Choice& botChoice) {
 
 template <typename Winner>
 void Game::win(Winner& winner) {
-    std::cout << winner << " won \n";
+    std::cout << winner << " won! \n";
 
     winner.m_score += 2;
 }

@@ -1,6 +1,11 @@
 #include "player.h"
 
 #include <random>
+#include <thread>
+#include <chrono>
+#include <chrono>
+
+using std::chrono::milliseconds;
 
 const std::string Player::Choice::CHARS = "rps";
 std::unordered_map<char, std::string> Player::Choice::NAMES = {
@@ -14,7 +19,7 @@ class RandomChar{
 public:
     RandomChar(const std::string& chars)
         : m_chars(chars),
-          distrib(0, chars.size()-1) {}
+          distrib(START, chars.size()-1) {}
 
     char operator()() {
         return m_chars[distrib(device)];
@@ -136,3 +141,18 @@ Bot& Bots::next() {
 
     return *current_bot_it;
 }
+
+
+void DelayedBotChoice::operator()() {
+    for (int i=0; i<3; ++i) {
+        std::cout << "." << std::flush;
+        std::this_thread::sleep_for(milliseconds(250));
+    }
+
+    std::cout << "\n";
+
+    auto choice = bot.choice();
+
+    promise.set_value(choice);
+}
+
