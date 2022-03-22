@@ -4,6 +4,9 @@
 
 #define LOOP for(;;)
 
+#define BEGIN std::cout << "-----------------------\n";
+#define END std::cout << "-----------------------\n\n";
+
 
 class Game final {
 public:

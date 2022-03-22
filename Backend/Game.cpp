@@ -4,6 +4,7 @@
 #include <thread>
 #include <cassert>
 
+
 Game::Game(const std::string &name, const int bots)
     : m_player(name),
       m_bots(bots) {
@@ -14,6 +15,8 @@ void Game::exec() {
     LOOP {
         Bot& bot = m_bots.next();
 
+        BEGIN
+
         std::cout << m_player << " vs " << bot << "\n";
 
         auto playerChoice = m_player.choice();
@@ -21,7 +24,10 @@ void Game::exec() {
 
         resolve(playerChoice, botChoice);
 
-        std::cout << "Player score: " << m_player.m_score << "\n";
+        std::cout << m_player << " score: " << m_player.m_score << " : "
+                  << bot << " score: " << bot.m_score << "\n";
+
+        END
     }
 }
 
@@ -39,6 +45,8 @@ void Game::resolve(Player::Choice& playerChoice, Bot::Choice& botChoice) {
     if (playerChoice == botChoice) {
         win(playerChoice.player, botChoice.player);
     }
+
+
 }
 
 template <typename Winner>
