@@ -147,6 +147,8 @@ Bot& Bots::next() {
 
 
 void DelayedBotChoice::operator()() {
+    std::cout << bot << " is thinking";
+
     for (int i=0; i<3; ++i) {
         std::cout << "." << std::flush;
         std::this_thread::sleep_for(milliseconds(250));

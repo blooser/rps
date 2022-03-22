@@ -20,8 +20,8 @@ protected:
     template <typename Winner>
     void win(Winner& winner);
 
-    template <typename Winner, typename AnotherWinner>
-    void win(Winner& winner1, AnotherWinner& winner2);
+    template <typename Winner, typename AlsoWinner>
+    void win(Winner& winner1, AlsoWinner& winner2);
 
 private:
     Player m_player;

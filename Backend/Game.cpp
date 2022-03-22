@@ -32,7 +32,7 @@ void Game::exec() {
 
         resolve(playerChoice, botChoice);
 
-        std::cout << m_player << " score: " << m_player.m_score << " : "
+        std::cout << m_player << " score: " << m_player.m_score << " | "
                   << bot << " score: " << bot.m_score << "\n";
 
         END_ROUND
@@ -53,8 +53,6 @@ void Game::resolve(Player::Choice& playerChoice, Bot::Choice& botChoice) {
     if (playerChoice == botChoice) {
         win(playerChoice.player, botChoice.player);
     }
-
-
 }
 
 template <typename Winner>
@@ -64,8 +62,8 @@ void Game::win(Winner& winner) {
     winner.m_score += 2;
 }
 
-template <typename Winner, typename AnotherWinner>
-void Game::win(Winner& winner1, AnotherWinner& winner2) {
+template <typename Winner, typename AlsoWinner>
+void Game::win(Winner& winner1, AlsoWinner& winner2) {
     std::cout << "Tie for " << winner1 << " and " << winner2 << "\n";
 
     winner1.m_score += 1;
