@@ -4,12 +4,18 @@
 #include <thread>
 #include <cassert>
 
-Game::Game() : m_player("Matt") {
+Game::Game(const std::string &name, const int bots)
+    : m_player(name),
+      m_bots(bots) {
 
 }
 
 void Game::exec() {
     LOOP {
+        Bot& bot = m_bots.next();
+
+        std::cout << m_player << " vs " << bot << "\n";
+
         m_player.choice();
         bot.choice();
 

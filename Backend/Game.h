@@ -7,7 +7,7 @@
 
 class Game final {
 public:
-    Game();
+    Game(const std::string &name, const int bots);
 
     void exec();
 
@@ -22,7 +22,7 @@ protected:
 
 private:
     Player m_player;
-    Bot bot;
+    Bots m_bots;
 };
 
 

@@ -2,11 +2,19 @@
 
 #include <random>
 
+const std::string Player::Choice::CHARS = "rps";
+std::unordered_map<char, std::string> Player::Choice::NAMES = {
+    {'r', "Rock"},
+    {'p', "Paper"},
+    {'s', "Scissors"}
+};
+
+
 class RandomChar{
 public:
-    RandomChar(const std::string chars)
+    RandomChar(const std::string& chars)
         : m_chars(chars),
-          distrib(START, chars.size()-1) {}
+          distrib(0, chars.size()-1) {}
 
     char operator()() {
         return m_chars[distrib(device)];
@@ -20,7 +28,6 @@ private:
 
 RandomChar randomChar {Player::Choice::CHARS};
 
-
 Player::Player(const std::string &name)
     : m_name(name),
       m_score(ZERO) {
@@ -32,12 +39,6 @@ std::ostream &operator<<(std::ostream &os, const Player::Choice &choice) {
      return os << choice.NAMES[choice.m_value];
 };
 
-const std::string Player::Choice::CHARS = "rps";
-std::unordered_map<char, std::string> Player::Choice::NAMES = {
-    {'r', "Rock"},
-    {'p', "Paper"},
-    {'s', "Scissors"}
-};
 
 Player::Choice &Player::Choice::operator=(char choice) {
     m_value = choice;
@@ -99,3 +100,29 @@ void Bot::choice() {
     std::cout << m_name << " choosed: " << m_choice << "\n";
 }
 
+Bots::Bots(const int n) : m_bots_n(n) {
+    std::cout << "Spawning " << n << " bots\n";
+
+    m_bots.reserve(m_bots_n);
+    for (int i=START; i<n; ++i) {
+        m_bots.push_back(Bot());
+    }
+
+    m_current_bot_it = m_bots.begin();
+}
+
+const int Bots::size() const {
+    return m_bots.size();
+}
+
+Bot& Bots::next() {
+    auto current_bot_it = m_current_bot_it;
+
+    m_current_bot_it = std::next(m_current_bot_it);
+
+    if (m_current_bot_it == m_bots.end()) {
+        m_current_bot_it = m_bots.begin();
+    }
+
+    return *current_bot_it;
+}

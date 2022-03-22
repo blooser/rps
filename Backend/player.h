@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <unordered_map>
+#include <vector>
 
 #define START 0
 #define ZERO 0
@@ -51,6 +52,19 @@ public:
 
 private:
     static int counter;
+};
+
+class Bots {
+public:
+    Bots(const int n);
+
+    Bot& next();
+    const int size() const;
+
+private:
+    const int m_bots_n;
+    std::vector<Bot> m_bots;
+    std::vector<Bot>::iterator m_current_bot_it;
 };
 
 #endif // PLAYER_H
