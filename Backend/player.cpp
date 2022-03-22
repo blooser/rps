@@ -82,20 +82,23 @@ std::ostream& operator<<(std::ostream &os, const Player &player) {
 };
 
 Player::Choice Player::choice() {
-    std::cout << m_name << " choice: ";
-
-    char playerChoice;
-    std::cin >> playerChoice;
-
     Choice choice(*this);
-    choice = playerChoice;
+    char playerChoice;
 
-    if (choice.invalid()) {
-        std::cerr << "Invalid choice\n";
-        exit(-1);
+    while (choice.invalid()) {
+        std::cout << m_name << " choice (rps): ";
+
+        std::cin >> playerChoice;
+
+        choice = playerChoice;
+
+        if (choice.invalid()) {
+            std::cerr << "Invalid choice\n";
+            continue;
+        }
+
+        std::cout << m_name << " choosed: " << choice << "\n";
     }
-
-    std::cout << m_name << " choosed: " << choice << "\n";
 
     return choice;
 }
