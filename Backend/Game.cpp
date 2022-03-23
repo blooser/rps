@@ -42,13 +42,13 @@ void Game::resolve(Player::Choice& playerChoice, Bot::Choice& botChoice) {
     if (playerChoice > botChoice) {
         score.playerScore += 2;
 
-        std::cout << playerChoice.player << " won!\n";
+        std::cout << playerChoice.player << " won! (" << playerChoice << " > " << botChoice << ")\n";
     }
 
     if (playerChoice < botChoice) {
         score.botScore += 2;
 
-        std::cout << botChoice.player << " won!\n";
+        std::cout << botChoice.player << " won! (" << botChoice << " > " << playerChoice << ")\n";
     }
 
     if (playerChoice == botChoice) {
