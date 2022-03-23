@@ -11,6 +11,7 @@
 #define START 0
 #define ZERO 0
 
+
 class Player {
 public:
     Player(const std::string &name);
@@ -36,6 +37,8 @@ public:
 
     virtual Choice choice();
 
+    bool operator==(const Player &);
+
     friend std::ostream& operator<<(std::ostream &os, const Player& player);
 
     friend class Game;
@@ -45,17 +48,17 @@ protected:
     unsigned int m_score;
 };
 
+
 class Bot : public Player {
 public:
     Bot();
 
     Choice choice() override;
 
-    friend class Game;
-
 private:
     static int counter;
 };
+
 
 class Bots {
 public:

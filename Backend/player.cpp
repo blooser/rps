@@ -103,6 +103,10 @@ Player::Choice Player::choice() {
     return choice;
 }
 
+bool Player::operator==(const Player &player) {
+    return m_name == player.m_name;
+}
+
 int Bot::counter = START;
 
 Bot::Bot() : Player("Bot" + std::to_string(++counter)) {
@@ -154,7 +158,7 @@ void DelayedBotChoice::operator()() {
         std::this_thread::sleep_for(milliseconds(250));
     }
 
-    std::cout << "\n";
+    std::cout << "\n" << std::flush;
 
     auto choice = bot.choice();
 
